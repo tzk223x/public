@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: factorio-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/tzk223x/factorio-server-charts'
+    targetRevision: HEAD
+    path: 'charts/factorio-server-charts'
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: factorio
+  syncPolicy:
+    automated:
+      prune: true  # Automatically delete resources no longer in Git
+      selfHeal: true  # Automatically sync resources that drift from Git
